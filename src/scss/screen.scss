@@ -1,0 +1,28 @@
+@import "constants.scss";
+@import "utils.scss";
+
+.screen-ratio-provider {
+	position: relative;
+	width: 100%;
+	padding-top: 200%;
+}
+
+.screen {
+	position: absolute;
+	display: flex;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-color: $screenBg;
+
+	&__canvas {
+		@include debug;
+		width: 70%;
+	}
+
+	&__info {
+		@include debug;
+		width: 30%;
+	}
+}
