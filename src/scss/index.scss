@@ -1,0 +1,44 @@
+@import "utils.scss";
+
+
+
+.test {
+	background: #000;
+	width: 100px;
+	height: 100px;
+}
+
+.container {
+	position: relative;
+	width: 100%;
+	max-width: 500px;
+	height: 90vh;
+	padding: 10px;
+	box-sizing: border-box;
+	margin: 0 auto;
+
+	@include debug;
+}
+
+.screen-ratio-provider {
+	position: relative;
+	width: 100%;
+	padding-top: 200%;
+}
+
+.screen {
+	position: absolute;
+	display: flex;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+
+	&__canvas {
+		width: 70%;
+	}
+
+	&__info {
+		width: 30%;
+	}
+}
