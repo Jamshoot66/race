@@ -4,4 +4,45 @@
 .controllers-container {
 	@include debug;
 
+	button {
+		background-color: $button;
+		border-radius: 50%;
+		box-sizing: border-box;
+		border: none;
+		box-shadow: none;
+		position: relative;
+	}
+}
+
+.btn-mid {
+	width: 50px;
+	height: 50px;
+}
+
+.arrow-buttons-group {
+	position: relative;
+	height: 200px;
+	padding-top: 50px;
+
+	button {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	#btn-left {
+		transform: translate(25px, 75px);
+	}
+
+	#btn-right {
+		transform: translate(125px, 75px);
+	}
+
+	#btn-up {
+		transform: translate(75px, 25px);
+	}
+
+	#btn-down {
+		transform: translate(75px, 125px);
+	}
 }
