@@ -1,17 +1,5 @@
 @import "constants.scss";
 @import "utils.scss";
 
-.container {
-	position: relative;
-	width: 100%;
-	max-width: 500px;
-	height: 90vh;
-	padding: 10px;
-	box-sizing: border-box;
-	margin: 0 auto;
-	background-color: $deviceBg;
-
-	@include debug;
-}
-
+@import "main-container.scss";
 @import "screen.scss";
