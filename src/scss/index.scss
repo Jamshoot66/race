@@ -1,12 +1,5 @@
+@import "constants.scss";
 @import "utils.scss";
-
-
-
-.test {
-	background: #000;
-	width: 100px;
-	height: 100px;
-}
 
 .container {
 	position: relative;
@@ -16,6 +9,7 @@
 	padding: 10px;
 	box-sizing: border-box;
 	margin: 0 auto;
+	background-color: $deviceBg;
 
 	@include debug;
 }
@@ -33,12 +27,15 @@
 	width: 100%;
 	top: 0;
 	left: 0;
+	background-color: $screenBg;
 
 	&__canvas {
+		@include debug;
 		width: 70%;
 	}
 
 	&__info {
+		@include debug;
 		width: 30%;
 	}
 }
