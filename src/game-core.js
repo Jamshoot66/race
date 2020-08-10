@@ -1,4 +1,8 @@
+import { TestObject } from './objects/tst-obj.js';
+
 class GameCore {
+  objects = [];
+
   constructor(props) {
     const { containerId } = props;
     this.maxFPS = 60;
@@ -31,19 +35,32 @@ class GameCore {
     this.cube = new THREE.Mesh(geometry, material);
     this.scene.add(this.cube);
 
+    const test = new TestObject();
+    this.addObject(test);
+
     this.camera.position.z = 5;
 
     this.render();
   }
 
+  addObject = (renderableObject) => {
+    this.objects.push(renderableObject);
+    this.scene.add(renderableObject.mesh);
+  };
+
   render = () => {
     const startTime = Date.now();
+    this.objects.forEach((object) =>
+      object.update(startTime - this.lastFrameTime)
+    );
+
     const { renderer } = this;
     this.cube.rotation.x += 0.01;
     this.cube.rotation.y += 0.01;
 
     renderer.render(this.scene, this.camera);
-    const elapsedTime = Date.now() - startTime;
+    this.lastFrameTime = Date.now();
+    const elapsedTime = this.lastFrameTime - startTime;
     const nextRenderDelay = Math.max(1000 / this.maxFPS - elapsedTime, 0);
     setTimeout(() => requestAnimationFrame(this.render), nextRenderDelay);
   };
