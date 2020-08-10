@@ -19,8 +19,15 @@ class GameCore {
     );
     this.renderer.setClearColor('#4D5041');
 
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight.position.set(0, 0, 1);
+    this.scene.add(directionalLight);
+
     const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const material = new THREE.MeshPhongMaterial({
+      color: 0x00ff00,
+      depthWrite: false,
+    });
     this.cube = new THREE.Mesh(geometry, material);
     this.scene.add(this.cube);
 
