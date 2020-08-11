@@ -2,8 +2,8 @@ import Road from 'objects/Road';
 
 class GameCore {
   objects = [];
-  _speed = 1;
-  maxSpeed = 5;
+  _speed = 0;
+  maxSpeed = 2;
 
   set speed(value) {
     this._speed = Math.min(value, this.maxSpeed);
@@ -21,7 +21,7 @@ class GameCore {
     const renderTarget = document.querySelector(`#${containerId} > canvas`);
 
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(75, 1 / 2, 0.1, 100);
+    this.camera = new THREE.PerspectiveCamera(90, 1 / 2, 0.1, 100);
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: renderTarget,
