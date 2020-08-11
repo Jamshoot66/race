@@ -1,7 +1,17 @@
-import { TestObject } from './objects/tst-obj.js';
+import Road from 'objects/Road';
 
 class GameCore {
   objects = [];
+  _speed = 1;
+  maxSpeed = 5;
+
+  set speed(value) {
+    this._speed = Math.min(value, this.maxSpeed);
+  }
+
+  get speed() {
+    return this._speed;
+  }
 
   constructor(props) {
     const { containerId } = props;
@@ -35,8 +45,8 @@ class GameCore {
     this.cube = new THREE.Mesh(geometry, material);
     this.scene.add(this.cube);
 
-    const test = new TestObject();
-    this.addObject(test);
+    const road = new Road();
+    this.addObject(road);
 
     this.camera.position.z = 5;
 
@@ -50,9 +60,12 @@ class GameCore {
 
   render = () => {
     const startTime = Date.now();
-    this.objects.forEach((object) =>
-      object.update(startTime - this.lastFrameTime)
-    );
+    this.speed += 0.1;
+
+    this.objects.forEach((object) => {
+      if (object.type === 'road') object.speed = this.speed;
+      object.update(startTime - this.lastFrameTime || 0);
+    });
 
     const { renderer } = this;
     this.cube.rotation.x += 0.01;
