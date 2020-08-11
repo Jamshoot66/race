@@ -1,9 +1,10 @@
 import Road from 'objects/Road';
+import Car2D from 'objects/Car2D';
 
 class GameCore {
   objects = [];
   _speed = 0;
-  maxSpeed = 2;
+  maxSpeed = 5;
 
   set speed(value) {
     this._speed = Math.min(value, this.maxSpeed);
@@ -48,6 +49,9 @@ class GameCore {
     const road = new Road();
     this.addObject(road);
 
+    this.PlayerCar = new Car2D({ type: 'Player', color: 0xf62c1b });
+    this.addObject(this.PlayerCar);
+
     this.camera.position.z = 5;
 
     this.render();
@@ -56,6 +60,21 @@ class GameCore {
   addObject = (renderableObject) => {
     this.objects.push(renderableObject);
     this.scene.add(renderableObject.mesh);
+  };
+
+  processPlayerControl = (event) => {
+    switch (event) {
+      case 'moveLeft': {
+        this.PlayerCar.moveLeft();
+        break;
+      }
+      case 'moveRight': {
+        this.PlayerCar.moveRight();
+        break;
+      }
+      default:
+        return;
+    }
   };
 
   render = () => {
