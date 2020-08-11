@@ -10,6 +10,9 @@ export default class RenderableObject {
     this._mesh = mesh;
   }
 
+  constructor(type = '') {
+    this.type = type;
+  }
   // eslint-disable-next-line no-unused-vars
   update = (deltaTime) => {};
 }
