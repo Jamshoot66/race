@@ -1,4 +1,4 @@
-export class RenderableObject {
+export default class RenderableObject {
   _mesh = null;
 
   get mesh() {
@@ -10,5 +10,6 @@ export class RenderableObject {
     this._mesh = mesh;
   }
 
+  // eslint-disable-next-line no-unused-vars
   update = (deltaTime) => {};
 }
