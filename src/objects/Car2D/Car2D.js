@@ -60,10 +60,10 @@ export default class Car2D extends RenderableObject {
   }
   
   moveLeft = () => {
-    this.mesh.translateX(blockSize);
+    this.mesh.translateX(-blockSize);
   }
   
   moveRight = () => {
-    this.mesh.translateX(-blockSize);
+    this.mesh.translateX(blockSize);
   }
 }
