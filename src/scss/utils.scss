@@ -1,4 +1,4 @@
-$withDebug: true;
+$withDebug: false;
 
 @mixin debug {
 	@if ($withDebug) {
