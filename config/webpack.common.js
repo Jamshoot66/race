@@ -19,7 +19,12 @@ module.exports = {
       inject: 'body',
     }),
   ],
-
+  resolve: {
+    alias: {
+      objects: path.resolve(__dirname, '../src/objects/'),
+    },
+    extensions: ['.js'],
+  },
   module: {
     rules: [
       {
@@ -31,11 +36,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
