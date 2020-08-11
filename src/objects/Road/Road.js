@@ -12,8 +12,8 @@ export default class Road extends RenderableObject {
 
     const roadWidth = 5;
     const roadHeight = roadWidth * 2;
-    const textureSize = 0.5;
-    this.texture.repeat.set(roadWidth / textureSize, roadHeight / textureSize);
+    const blockSize = 0.5;
+    this.texture.repeat.set(roadWidth / blockSize, roadHeight / blockSize);
     
     this.material = new THREE.MeshStandardMaterial({
       color: 0xFFFFFF,
