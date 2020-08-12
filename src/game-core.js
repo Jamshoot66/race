@@ -30,7 +30,7 @@ class GameCore {
       constants.SCENE_FIRST_PLANE,
       constants.SCENE_SECOND_PLANE
     );
-    this.camera.position.z = 5;
+    this.camera.position.z = constants.ROAD_WIDTH;
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: renderTarget,

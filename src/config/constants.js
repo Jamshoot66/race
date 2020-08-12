@@ -1,5 +1,5 @@
-export const BLOCK_SIZE = 0.5;
-export const ROAD_WIDTH = BLOCK_SIZE * 5;
+export const BLOCK_SIZE = 1;
+export const ROAD_WIDTH = BLOCK_SIZE * 11;
 export const ROAD_HEIGHT = ROAD_WIDTH * 2;
 
 export const MAX_FPS = 60;
