@@ -1,5 +1,6 @@
 import './scss/index.scss';
 import Core from './game-core.js';
+import * as actions from './actions';
 
 window.addEventListener('load', () => {
   const core = new Core({
@@ -7,21 +8,21 @@ window.addEventListener('load', () => {
   });
 
   document.getElementById('btn-left').addEventListener('click', () => {
-    core.processPlayerControl('moveLeft');
+    core.processPlayerControl(actions.MOVE_LEFT);
   });
 
   document.getElementById('btn-right').addEventListener('click', () => {
-    core.processPlayerControl('moveRight');
+    core.processPlayerControl(actions.MOVE_RIGHT);
   });
 
   window.addEventListener('keydown', (e) => {
     switch (e.code) {
       case 'ArrowLeft': {
-        core.processPlayerControl('moveLeft');
+        core.processPlayerControl(actions.MOVE_LEFT);
         break;
       }
       case 'ArrowRight': {
-        core.processPlayerControl('moveRight');
+        core.processPlayerControl(actions.MOVE_RIGHT);
         break;
       }
       default:

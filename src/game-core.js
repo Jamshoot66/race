@@ -1,5 +1,6 @@
 import Road from 'objects/Road';
 import Car2D from 'objects/Car2D';
+import * as actions from './actions';
 
 class GameCore {
   objects = [];
@@ -64,11 +65,11 @@ class GameCore {
 
   processPlayerControl = (event) => {
     switch (event) {
-      case 'moveLeft': {
+      case actions.MOVE_LEFT: {
         this.PlayerCar.moveLeft();
         break;
       }
-      case 'moveRight': {
+      case actions.MOVE_RIGHT: {
         this.PlayerCar.moveRight();
         break;
       }
