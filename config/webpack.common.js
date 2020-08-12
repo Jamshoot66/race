@@ -23,6 +23,7 @@ module.exports = {
     alias: {
       objects: path.resolve(__dirname, '../src/objects/'),
       config: path.resolve(__dirname, '../src/config/'),
+      utils: path.resolve(__dirname, '../src/utils/'),
       src: path.resolve(__dirname, '../src/'),
     },
     extensions: ['.js'],
