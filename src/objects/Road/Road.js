@@ -26,6 +26,7 @@ export default class Road extends RenderableObject {
 
     this.geometry = new THREE.PlaneGeometry(roadWidth, roadHeight, 1, 1);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.mesh.translateZ(-0.0001);
 
     this.textureYOffset = 0;
     this.speed = 0;

@@ -48,8 +48,6 @@ export default class Car2D extends RenderableObject {
     car.merge(body, body.matrix, 1);
 
     this.mesh = new THREE.Mesh(car, materials);
-    this.mesh.translateZ(0.0001);
-    this.mesh.translateX(1.75);
 
   }
   
