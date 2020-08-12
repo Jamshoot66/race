@@ -1,6 +1,6 @@
 import './scss/index.scss';
 import Core from './game-core.js';
-import * as actions from './actions';
+import * as actions from 'config/actions';
 
 window.addEventListener('load', () => {
   const core = new Core({
