@@ -22,6 +22,8 @@ module.exports = {
   resolve: {
     alias: {
       objects: path.resolve(__dirname, '../src/objects/'),
+      config: path.resolve(__dirname, '../src/config/'),
+      src: path.resolve(__dirname, '../src/'),
     },
     extensions: ['.js'],
   },
