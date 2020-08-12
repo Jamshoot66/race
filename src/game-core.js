@@ -46,14 +46,6 @@ class GameCore {
     directionalLight.position.set(0, 0, 1);
     this.scene.add(directionalLight);
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshPhongMaterial({
-      color: 0x00ff00,
-      depthWrite: false,
-    });
-    this.cube = new THREE.Mesh(geometry, material);
-    this.scene.add(this.cube);
-
     const road = new Road();
     this.addObject(road);
 
@@ -94,8 +86,6 @@ class GameCore {
     });
 
     const { renderer } = this;
-    this.cube.rotation.x += 0.01;
-    this.cube.rotation.y += 0.01;
 
     renderer.render(this.scene, this.camera);
     this.lastFrameTime = Date.now();
