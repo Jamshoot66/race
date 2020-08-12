@@ -1,4 +1,5 @@
 import RenderableObject from 'objects/RenderableObject';
+import * as constants from 'config/constants';
 
 export default class Road extends RenderableObject {
   constructor() {
@@ -10,13 +11,13 @@ export default class Road extends RenderableObject {
     this.texture.wrapS = THREE.RepeatWrapping;
     this.texture.wrapT = THREE.RepeatWrapping;
 
-    const roadWidth = 5;
-    const roadHeight = roadWidth * 2;
-    const blockSize = 0.5;
+    const roadWidth = constants.ROAD_WIDTH;
+    const roadHeight = constants.ROAD_HEIGHT;
+    const blockSize = constants.BLOCK_SIZE;
     this.texture.repeat.set(roadWidth / blockSize, roadHeight / blockSize);
-    
+
     this.material = new THREE.MeshStandardMaterial({
-      color: 0xFFFFFF,
+      color: 0xffffff,
       opacity: 0.3,
       transparent: true,
       depthWrite: true,
@@ -25,14 +26,14 @@ export default class Road extends RenderableObject {
 
     this.geometry = new THREE.PlaneGeometry(roadWidth, roadHeight, 1, 1);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
-  
+
     this.textureYOffset = 0;
     this.speed = 0;
   }
 
   update = (deltaTime = 0) => {
     const speedFactor = 2;
-    this.textureYOffset += this.speed * speedFactor * deltaTime/1000;
+    this.textureYOffset += (this.speed * speedFactor * deltaTime) / 1000;
     this.texture.offset.set(0, this.textureYOffset);
   };
 }

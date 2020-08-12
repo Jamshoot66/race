@@ -1,6 +1,5 @@
 import RenderableObject from 'objects/RenderableObject';
-
-const blockSize = 0.5;
+import * as constants from 'config/constants';
 
 export default class Car2D extends RenderableObject {
   constructor({ type = 'Car2D', color = '0xFFFFFF' } = {}) {
@@ -24,22 +23,22 @@ export default class Car2D extends RenderableObject {
     });
     const materials = [wheelMaterial, bodyMaterial];
 
-    const wheelSize = [blockSize, blockSize];
+    const wheelSize = [constants.BLOCK_SIZE, constants.BLOCK_SIZE];
     const wheelFL = new THREE.PlaneGeometry(...wheelSize);
-    wheelFL.translate(-blockSize, blockSize, 0);
+    wheelFL.translate(-constants.BLOCK_SIZE, constants.BLOCK_SIZE, 0);
 
     const wheelFR = new THREE.PlaneGeometry(...wheelSize);
-    wheelFR.translate(blockSize, blockSize, 0);
+    wheelFR.translate(constants.BLOCK_SIZE, constants.BLOCK_SIZE, 0);
 
     const wheelBL = new THREE.PlaneGeometry(...wheelSize);
-    wheelBL.translate(-blockSize, -blockSize, 0);
+    wheelBL.translate(-constants.BLOCK_SIZE, -constants.BLOCK_SIZE, 0);
 
     const wheelBR = new THREE.PlaneGeometry(...wheelSize);
-    wheelBR.translate(blockSize, -blockSize, 0);
+    wheelBR.translate(constants.BLOCK_SIZE, -constants.BLOCK_SIZE, 0);
 
-    const bodySize = [blockSize, blockSize * 3];
+    const bodySize = [constants.BLOCK_SIZE, constants.BLOCK_SIZE * 3];
     const body = new THREE.PlaneGeometry(...bodySize);
-    body.translate(0, blockSize, 0);
+    body.translate(0, constants.BLOCK_SIZE, 0);
 
     const car = new THREE.Geometry();
     car.merge(wheelFL);
@@ -55,10 +54,10 @@ export default class Car2D extends RenderableObject {
   }
   
   moveLeft = () => {
-    this.mesh.translateX(-blockSize);
+    this.mesh.translateX(-constants.BLOCK_SIZE);
   }
   
   moveRight = () => {
-    this.mesh.translateX(blockSize);
+    this.mesh.translateX(constants.BLOCK_SIZE);
   }
 }

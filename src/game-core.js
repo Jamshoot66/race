@@ -1,11 +1,12 @@
 import Road from 'objects/Road';
 import Car2D from 'objects/Car2D';
-import * as actions from './actions';
+import * as actions from 'config/actions';
+import * as constants from 'config/constants';
 
 class GameCore {
   objects = [];
-  _speed = 0;
-  maxSpeed = 5;
+  _speed = constants.MIN_SPEED;
+  maxSpeed = constants.MAX_SPEED;
 
   set speed(value) {
     this._speed = Math.min(value, this.maxSpeed);
@@ -17,13 +18,19 @@ class GameCore {
 
   constructor(props) {
     const { containerId } = props;
-    this.maxFPS = 60;
+    this.maxFPS = constants.MAX_FPS;
     const THREE = window.THREE;
     const renderContainer = document.getElementById(containerId);
     const renderTarget = document.querySelector(`#${containerId} > canvas`);
 
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(90, 1 / 2, 0.1, 100);
+    this.camera = new THREE.PerspectiveCamera(
+      constants.SCENE_FOV,
+      renderTarget.clientHeight / renderTarget.clientWidth,
+      constants.SCENE_FIRST_PLANE,
+      constants.SCENE_SECOND_PLANE
+    );
+    this.camera.position.z = 5;
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: renderTarget,
@@ -53,7 +60,6 @@ class GameCore {
     this.PlayerCar = new Car2D({ type: 'Player', color: 0xf62c1b });
     this.addObject(this.PlayerCar);
 
-    this.camera.position.z = 5;
 
     this.render();
   }
