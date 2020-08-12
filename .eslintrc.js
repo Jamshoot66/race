@@ -13,6 +13,9 @@ module.exports = {
     ecmaVersion: 11,
     sourceType: 'module',
   },
+  globals: {
+    THREE: 'readonly',
+  },
   plugins: ['react'],
   rules: {},
 };
