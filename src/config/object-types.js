@@ -8,3 +8,7 @@ export const CAR_COLORS = [
   0x5A7D83,
   0x6482F0
 ]
+
+export const GAME_STATE_MENU = 'GAME_STATE_MENU';
+export const GAME_STATE_PLAY = 'GAME_STATE_PLAY';
+export const GAME_STATE_END = 'GAME_STATE_END';
