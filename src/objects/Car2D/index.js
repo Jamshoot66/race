@@ -1,1 +1,1 @@
-export { default } from './Car2D.js';
+export * from './Car2D.factory.js';
