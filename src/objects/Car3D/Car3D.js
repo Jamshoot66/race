@@ -4,7 +4,6 @@ import * as types from 'config/types';
 import { generateObject } from 'utils/objects';
 
 export default class Car3D extends RenderableObject {
-  angle = 0;
 
   constructor() {
     super('Car3D');
