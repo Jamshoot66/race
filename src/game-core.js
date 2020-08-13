@@ -154,7 +154,15 @@ class GameCore {
   generateEnemy = () => {
     if (Date.now() - this.lastEnemySpawn > constants.ENEMIES_SPAWN_TIMEOUT) {
       this.lastEnemySpawn = Date.now();
-      this.addObject(createEnemyCar(this.speed / 2, randomInt(-4, 5)));
+      this.addObject(
+        createEnemyCar(
+          this.speed / 2,
+          randomInt(
+            constants.MIN_LEFT_POSITION,
+            constants.MAX_RIGHT_POSITION + 1
+          )
+        )
+      );
     }
   };
 
