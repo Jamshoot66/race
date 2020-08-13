@@ -13,3 +13,5 @@ export const randomInt = (min, max) =>
  * @return {*} random array item
  */
 export const getRandomItem = (array) => array[randomInt(2, array.length)];
+
+export const degToRad = (deg) => (Math.PI * deg) / 180.0;
