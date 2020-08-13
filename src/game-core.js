@@ -1,10 +1,11 @@
 import Road from 'objects/Road';
 import { createPlayerCar, createEnemyCar } from 'objects/Car2D';
+import Car3D from 'objects/Car3D';
 import * as actions from 'config/actions';
 import * as constants from 'config/constants';
 import * as types from 'config/types';
 import { isCollided } from 'utils/collision';
-import { randomInt } from 'utils/math';
+import { randomInt, degToRad } from 'utils/math';
 
 class GameCore {
   objects = [];
@@ -28,7 +29,7 @@ class GameCore {
     this.renderContainer = document.getElementById(containerId);
     this.renderTarget = document.querySelector(`#${containerId} > canvas`);
 
-    this.setGameState(types.GAME_STATE_PLAY);
+    this.setGameState(types.GAME_STATE_MENU);
     this.initCamera();
 
     this.updateCycle();
@@ -68,11 +69,27 @@ class GameCore {
     this.scene.add(directionalLight);
   };
 
+  setInitialMenuScene = () => {
+    const road = new Road();
+    road.mesh.translateZ(-0.5);
+    this.addObject(road);
+    const menuCar = new Car3D();
+    this.scene.position.set(-0.2, -0.5, 7.5);
+    this.scene.rotation.set(degToRad(-80), degToRad(-10), degToRad(135));
+    this.addObject(menuCar);
+  };
+
   setInitialPlayScene = () => {
     this.addObject(new Road());
 
     this.playerCar = createPlayerCar();
     this.addObject(this.playerCar);
+  };
+
+  initMenuScene = () => {
+    this.objects = [];
+    this.initWebGL();
+    this.setInitialMenuScene();
   };
 
   initPlayScene = () => {
@@ -84,7 +101,10 @@ class GameCore {
   setGameState = (gameState) => {
     this.gameState = gameState;
     switch (gameState) {
-      // case types.GAME_STATE_MENU:
+      case types.GAME_STATE_MENU: {
+        this.initMenuScene();
+        break;
+      }
       case types.GAME_STATE_PLAY: {
         this.initPlayScene();
         break;
@@ -183,6 +203,18 @@ class GameCore {
     );
   };
 
+  menuCycle = () => {
+    const startTime = Date.now();
+    const elapsedTime = startTime - this.lastFrameTime || 0;
+    this.updateObjects(elapsedTime);
+    this.render();
+
+    this.lastFrameTime = Date.now();
+    const frameTime = this.lastFrameTime - startTime;
+    const nextRenderDelay = Math.max(1000 / this.maxFPS - frameTime, 0);
+    setTimeout(() => requestAnimationFrame(this.menuCycle), nextRenderDelay);
+  };
+
   playCycle = () => {
     const startTime = Date.now();
     const elapsedTime = startTime - this.lastFrameTime || 0;
@@ -209,7 +241,9 @@ class GameCore {
 
   updateCycle = () => {
     switch (this.gameState) {
-      // case types.GAME_STATE_MENU:
+      case types.GAME_STATE_MENU: {
+        return this.menuCycle();
+      }
       case types.GAME_STATE_PLAY: {
         return this.playCycle();
       }
