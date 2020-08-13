@@ -76,6 +76,7 @@ class GameCore {
   };
 
   initPlayScene = () => {
+    this.objects = [];
     this.initWebGL();
     this.setInitialPlayScene();
   };
@@ -157,10 +158,28 @@ class GameCore {
     }
   };
 
+  cleanUselessObjects = () => {
+    const objectsToDelete = this.objects.filter(
+      (object) =>
+        object.type === types.TYPE_ENEMY_CAR &&
+        object.mesh.position.y < constants.DELETE_POSITION
+    );
+
+    objectsToDelete?.forEach((object) => {
+      const instance = this.scene.getObjectById(object.mesh.id);
+      this.scene.remove(instance);
+    });
+
+    this.objects = this.objects.filter(
+      (object) => !objectsToDelete.includes(object)
+    );
+  };
+
   playCycle = () => {
     const startTime = Date.now();
     const elapsedTime = startTime - this.lastFrameTime || 0;
     this.updateScore(elapsedTime);
+    this.cleanUselessObjects();
 
     this.speed += constants.ACCELERATION_PER_TICK;
 

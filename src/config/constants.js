@@ -14,6 +14,7 @@ export const ROAD_SPEED_FACTOR = 1;
 
 export const ZERO_POSITION = { x: 0, y: -8.5 * BLOCK_SIZE, z: 0 };
 export const TOP_POSITION = { x: 0, y: ROAD_HEIGHT, z: 0 };
+export const DELETE_POSITION = -11 * BLOCK_SIZE;
 
 export const SCORE_FACTOR = 10;
 
