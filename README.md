@@ -6,3 +6,5 @@
 Open [localhost:3000](http://localhost:3000) to watch it.
 
 `yarn build` - make production build at `./dist` folder
+
+`yarn test` - run tests

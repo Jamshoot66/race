@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.develop.js",
     "build": "webpack --config config/webpack.production.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "eslint": "^7.6.0",
     "eslint-plugin-react": "^7.20.5",
     "html-webpack-plugin": "^4.3.0",
+    "jest": "^26.4.0",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
     "sass": "^1.26.10",
