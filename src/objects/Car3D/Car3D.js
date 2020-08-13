@@ -20,6 +20,16 @@ export default class Car3D extends RenderableObject {
       map: texture,
     });
 
+    const neonTexture = new THREE.TextureLoader().load('textures/neon.png');
+    const neonMaterial = new THREE.MeshPhongMaterial({
+      map: neonTexture,
+      color: types.NEON_COLOR,
+      emissive: types.NEON_EMISSIVE_COLOR,
+      transparent: true,
+      opacity: 0.7,
+      depthWrite: true,
+    });
+
     const body = generateObject(
       [
         [0, 1, 0],
@@ -51,12 +61,18 @@ export default class Car3D extends RenderableObject {
 
     const bodyMesh = new THREE.Mesh(body, bodyMaterial);
 
+    const neon = this.createNeon(neonMaterial);
+    neon.translateZ(-0.6);
+    neon.translateY(-1.1);
+    neon.translateX(1);
+
     this.mesh = new THREE.Group();
     this.mesh.add(this.wheelMeshFL);
     this.mesh.add(this.wheelMeshFR);
     this.mesh.add(this.wheelMeshBL);
     this.mesh.add(this.wheelMeshBR);
     this.mesh.add(bodyMesh);
+    this.mesh.add(neon);
   }
 
   createBlock = (material) => {
@@ -70,8 +86,18 @@ export default class Car3D extends RenderableObject {
     );
   };
 
-  update = (deltaTime) => {
-    const angle = -0.1;
+  createNeon = (material) => {
+    return new THREE.Mesh(
+      new THREE.PlaneGeometry(
+        constants.BLOCK_SIZE * 2,
+        constants.BLOCK_SIZE * 4
+      ),
+      material
+    );
+  };
+
+  update = () => {
+    const angle = -0.065;
     this.wheelMeshFL.rotateX(angle);
     this.wheelMeshFR.rotateX(angle);
     this.wheelMeshBR.rotateX(angle);
