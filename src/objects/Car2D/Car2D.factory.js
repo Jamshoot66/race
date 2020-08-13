@@ -7,8 +7,9 @@ export const createCar = ({
   type,
   color,
   position = constants.ZERO_POSITION,
+  speed = 0,
 } = {}) => {
-  const car = new Car2D({ type, color });
+  const car = new Car2D({ type, color, speed });
   car.mesh.position.set(position.x, position.y, position.z);
   return car;
 };
@@ -19,9 +20,10 @@ export const createPlayerCar = () =>
     color: types.DEFAULT_PLAYER_COLOR,
   });
 
-export const createEnemyCar = () =>
+export const createEnemyCar = (speed = 0) =>
   createCar({
     type: types.TYPE_ENEMY_CAR,
     color: getRandomItem(types.CAR_COLORS),
     position: { x: 0.0, y: constants.TOP_POSITION, z: 0.0 },
+    speed,
   });

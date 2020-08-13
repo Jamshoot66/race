@@ -2,10 +2,10 @@ import RenderableObject from 'objects/RenderableObject';
 import * as constants from 'config/constants';
 
 export default class Car2D extends RenderableObject {
-  constructor({ type = 'Car2D', color = '0xFFFFFF' } = {}) {
+  constructor({ type = 'Car2D', color = '0xFFFFFF', speed = 0 } = {}) {
     super(type);
-    const { THREE } = window;
 
+    this.speed = speed;
     const wheelTexture = new THREE.TextureLoader().load('textures/brick.png');
 
     const bodyTexture = new THREE.TextureLoader().load('textures/brick.png');
@@ -48,14 +48,24 @@ export default class Car2D extends RenderableObject {
     car.merge(body, body.matrix, 1);
 
     this.mesh = new THREE.Mesh(car, materials);
-
   }
-  
+
   moveLeft = () => {
     this.mesh.translateX(-constants.BLOCK_SIZE);
-  }
-  
+  };
+
   moveRight = () => {
     this.mesh.translateX(constants.BLOCK_SIZE);
-  }
+  };
+
+  moveByRelativeSpeed = (deltaTime, playerSpeed) => {
+    const speedFactor = 1;
+    const dy = -((playerSpeed - this.speed) * speedFactor * deltaTime) / 1000;
+    this.mesh.translateY(dy);
+  };
+
+  update = (deltaTime, payload = {}) => {
+    const { playerSpeed = 0 } = payload;
+    this.moveByRelativeSpeed(deltaTime, playerSpeed);
+  };
 }
