@@ -7,6 +7,8 @@ window.addEventListener('load', () => {
     containerId: 'screen-render-container',
   });
 
+  window.addEventListener('resize', core.onCanvasResize);
+
   document.getElementById('btn-left').addEventListener('click', () => {
     core.processPlayerControl(actions.MOVE_LEFT);
   });
