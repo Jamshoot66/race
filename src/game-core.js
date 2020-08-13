@@ -4,6 +4,7 @@ import * as actions from 'config/actions';
 import * as constants from 'config/constants';
 import * as types from 'config/object-types';
 import { isCollided } from 'utils/collision';
+import { randomInt } from 'utils/math';
 
 class GameCore {
   objects = [];
@@ -11,6 +12,7 @@ class GameCore {
   maxSpeed = constants.MAX_SPEED;
   score = 0;
   distance = 0;
+  lastEnemySpawn = 0;
 
   set speed(value) {
     this._speed = Math.min(value, this.maxSpeed);
@@ -29,7 +31,7 @@ class GameCore {
     this.setGameState(types.GAME_STATE_PLAY);
     this.initCamera();
 
-    this.gameCycle();
+    this.updateCycle();
   }
 
   onCanvasResize = () => this.initCamera();
@@ -71,7 +73,6 @@ class GameCore {
 
     this.playerCar = createPlayerCar();
     this.addObject(this.playerCar);
-    this.addObject(createEnemyCar(this.speed / 2, -4));
   };
 
   initPlayScene = () => {
@@ -80,6 +81,7 @@ class GameCore {
   };
 
   setGameState = (gameState) => {
+    this.gameState = gameState;
     switch (gameState) {
       // case types.GAME_STATE_MENU:
       case types.GAME_STATE_PLAY: {
@@ -148,7 +150,14 @@ class GameCore {
     return collidable.some((object) => isCollided(this.playerCar, object));
   };
 
-  gameCycle = () => {
+  generateEnemy = () => {
+    if (Date.now() - this.lastEnemySpawn > constants.ENEMIES_SPAWN_TIMEOUT) {
+      this.lastEnemySpawn = Date.now();
+      this.addObject(createEnemyCar(this.speed / 2, randomInt(-4, 5)));
+    }
+  };
+
+  playCycle = () => {
     const startTime = Date.now();
     const elapsedTime = startTime - this.lastFrameTime || 0;
     this.updateScore(elapsedTime);
@@ -160,12 +169,29 @@ class GameCore {
       console.log('game-over');
       this.setGameState(types.GAME_STATE_PLAY);
     }
+
+    if (Math.floor(this.distance) % constants.ENEMIES_TO_DISTANCE === 0)
+      this.generateEnemy();
     this.render();
 
     this.lastFrameTime = Date.now();
     const frameTime = this.lastFrameTime - startTime;
     const nextRenderDelay = Math.max(1000 / this.maxFPS - frameTime, 0);
-    setTimeout(() => requestAnimationFrame(this.gameCycle), nextRenderDelay);
+    setTimeout(() => requestAnimationFrame(this.playCycle), nextRenderDelay);
+  };
+
+  updateCycle = () => {
+    switch (this.gameState) {
+      // case types.GAME_STATE_MENU:
+      case types.GAME_STATE_PLAY: {
+        return this.playCycle();
+      }
+      case types.GAME_STATE_END: {
+        return this.playCycle();
+      }
+      default:
+        return;
+    }
   };
 
   render = () => {
