@@ -8,8 +8,9 @@ export const SCENE_FIRST_PLANE = 0.1;
 export const SCENE_SECOND_PLANE = 100;
 
 export const MIN_SPEED = 3;
-export const MAX_SPEED = 10;
+export const MAX_SPEED = 20;
 export const ACCELERATION_PER_TICK = 0.3;
+export const ROAD_SPEED_FACTOR = 1;
 
 export const ZERO_POSITION = { x: 0, y: -8.5 * BLOCK_SIZE, z: 0 };
 export const TOP_POSITION = { x: 0, y: ROAD_HEIGHT, z: 0 };

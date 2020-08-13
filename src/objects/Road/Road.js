@@ -34,7 +34,7 @@ export default class Road extends RenderableObject {
   }
 
   update = (deltaTime = 0, payload = { speed: 0 }) => {
-    const speedFactor = 2;
+    const speedFactor = constants.ROAD_SPEED_FACTOR;
     const { playerSpeed } = payload;
     this.speed = playerSpeed;
     this.textureYOffset += (this.speed * speedFactor * deltaTime) / 1000;
