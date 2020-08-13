@@ -2,7 +2,7 @@ import Road from 'objects/Road';
 import { createPlayerCar, createEnemyCar } from 'objects/Car2D';
 import * as actions from 'config/actions';
 import * as constants from 'config/constants';
-import * as types from 'config/object-types';
+import * as types from 'config/types';
 import { isCollided } from 'utils/collision';
 import { randomInt } from 'utils/math';
 

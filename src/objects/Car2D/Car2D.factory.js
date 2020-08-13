@@ -1,6 +1,6 @@
 import Car2D from './Car2D.js';
 import * as constants from 'config/constants';
-import * as types from 'config/object-types';
+import * as types from 'config/types';
 import { getRandomItem } from 'utils/math';
 import { BLOCK_SIZE } from 'config/constants';
 

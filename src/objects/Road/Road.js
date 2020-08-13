@@ -1,6 +1,6 @@
 import RenderableObject from 'objects/RenderableObject';
 import * as constants from 'config/constants';
-import * as types from 'config/object-types';
+import * as types from 'config/types';
 
 export default class Road extends RenderableObject {
   constructor() {
