@@ -23,43 +23,77 @@ class GameCore {
   constructor(props) {
     const { containerId } = props;
     this.maxFPS = constants.MAX_FPS;
-    const THREE = window.THREE;
-    const renderContainer = document.getElementById(containerId);
-    const renderTarget = document.querySelector(`#${containerId} > canvas`);
+    this.renderContainer = document.getElementById(containerId);
+    this.renderTarget = document.querySelector(`#${containerId} > canvas`);
 
-    this.scene = new THREE.Scene();
+    this.setGameState(types.GAME_STATE_PLAY);
+    this.initCamera();
+
+    this.gameCycle();
+  }
+
+  onCanvasResize = () => this.initCamera();
+
+  initCamera = () => {
+    this.renderTarget.style.width = `${this.renderContainer.clientWidth}px`;
+    this.renderTarget.style.height = `${this.renderContainer.clientHeight}px`;
+
     this.camera = new THREE.PerspectiveCamera(
       constants.SCENE_FOV,
-      renderTarget.clientHeight / renderTarget.clientWidth,
+      this.renderTarget.clientWidth / this.renderTarget.clientHeight,
       constants.SCENE_FIRST_PLANE,
       constants.SCENE_SECOND_PLANE
     );
     this.camera.position.z = constants.ROAD_WIDTH;
+  };
+
+  initWebGL = () => {
+    this.scene = new THREE.Scene();
+    this.initCamera();
 
     this.renderer = new THREE.WebGLRenderer({
-      canvas: renderTarget,
+      canvas: this.renderTarget,
     });
 
     this.renderer.setSize(
-      renderContainer.clientWidth,
-      renderContainer.clientHeight
+      this.renderContainer.clientWidth,
+      this.renderContainer.clientHeight
     );
     this.renderer.setClearColor('#4D5041');
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
     directionalLight.position.set(0, 0, 1);
     this.scene.add(directionalLight);
+  };
 
-    const road = new Road();
-    this.addObject(road);
+  setInitialPlayScene = () => {
+    this.addObject(new Road());
 
     this.playerCar = createPlayerCar();
-
     this.addObject(this.playerCar);
     this.addObject(createEnemyCar(this.speed / 2, -4));
+  };
 
-    this.gameCycle();
-  }
+  initPlayScene = () => {
+    this.initWebGL();
+    this.setInitialPlayScene();
+  };
+
+  setGameState = (gameState) => {
+    switch (gameState) {
+      // case types.GAME_STATE_MENU:
+      case types.GAME_STATE_PLAY: {
+        this.initPlayScene();
+        break;
+      }
+      case types.GAME_STATE_END: {
+        this.initPlayScene();
+        break;
+      }
+      default:
+        return;
+    }
+  };
 
   addObject = (renderableObject) => {
     this.objects.push(renderableObject);
@@ -124,6 +158,7 @@ class GameCore {
     this.updateObjects(elapsedTime);
     if (this.checkCollisions()) {
       console.log('game-over');
+      this.setGameState(types.GAME_STATE_PLAY);
     }
     this.render();
 
