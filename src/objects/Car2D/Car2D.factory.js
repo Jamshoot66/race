@@ -24,6 +24,6 @@ export const createEnemyCar = (speed = 0) =>
   createCar({
     type: types.TYPE_ENEMY_CAR,
     color: getRandomItem(types.CAR_COLORS),
-    position: { x: 0.0, y: constants.TOP_POSITION, z: 0.0 },
+    position: constants.TOP_POSITION,
     speed,
   });
