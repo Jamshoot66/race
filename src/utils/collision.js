@@ -5,7 +5,7 @@ import RenderableObject from 'objects/RenderableObject';
  * @param {RenderableObject} object
  * @return {Box3|undefined}
  */
-export const getTransformedAABB = (object) => {
+export const getTranslatedAABB = (object) => {
   if (!(object instanceof RenderableObject)) return;
   const box = new THREE.Box3();
   object.mesh.geometry.computeBoundingBox();
@@ -26,8 +26,8 @@ export const getCollisionBox = (firstObject, secondObject) => {
   )
     return;
 
-  const first = getTransformedAABB(firstObject);
-  const second = getTransformedAABB(secondObject);
+  const first = getTranslatedAABB(firstObject);
+  const second = getTranslatedAABB(secondObject);
   return first?.intersect(second);
 };
 
