@@ -53,12 +53,12 @@ class GameCore {
     const road = new Road();
     this.addObject(road);
 
-    this.PlayerCar = createPlayerCar();
+    this.playerCar = createPlayerCar();
 
-    this.addObject(this.PlayerCar);
+    this.addObject(this.playerCar);
     this.addObject(createEnemyCar(this.speed / 2, -4));
 
-    this.render();
+    this.gameCycle();
   }
 
   addObject = (renderableObject) => {
@@ -69,11 +69,11 @@ class GameCore {
   processPlayerControl = (event) => {
     switch (event) {
       case actions.MOVE_LEFT: {
-        this.PlayerCar.moveLeft();
+        this.playerCar.moveLeft();
         break;
       }
       case actions.MOVE_RIGHT: {
-        this.PlayerCar.moveRight();
+        this.playerCar.moveRight();
         break;
       }
       default:
@@ -81,34 +81,61 @@ class GameCore {
     }
   };
 
-  render = () => {
-    const startTime = Date.now();
-    const elapsedTime = startTime - this.lastFrameTime || 0;
+  updateScore = (elapsedTime) => {
     this.distance += (this.speed * elapsedTime) / 1000;
     this.score = Math.floor(constants.SCORE_FACTOR * this.distance);
+  };
 
-
-    this.speed += 0.1;
-    this.objects.forEach((object) => {
-      if (object.type === 'road') object.speed = this.speed;
-      if (object.type === types.TYPE_ENEMY_CAR) {
-        object.update(elapsedTime, {
+  getObjectUpdatePayload = (object) => {
+    switch (object.type) {
+      case types.TYPE_ROAD:
+        return { playerSpeed: this.speed };
+      case types.TYPE_ENEMY_CAR:
+        return {
           playerSpeed: this.speed,
-        });
+        };
+      default:
+        return {};
+    }
+  };
 
-        console.log(isCollided(this.PlayerCar, object));
-      } else {
-        object.update(elapsedTime);
-      }
+  updateObjects = (elapsedTime) => {
+    this.objects.forEach((object) => {
+      const payload = this.getObjectUpdatePayload(object);
+      object.update(elapsedTime, payload);
     });
+  };
 
-    const { renderer } = this;
-    renderer.render(this.scene, this.camera);
+  checkCollisions = () => {
+    const collidable = this.objects.filter((object) =>
+      types.COLLIDABLE_OBJECTS.includes(object.type)
+    );
+
+    return collidable.some((object) => isCollided(this.playerCar, object));
+  };
+
+  gameCycle = () => {
+    const startTime = Date.now();
+    const elapsedTime = startTime - this.lastFrameTime || 0;
+    this.updateScore(elapsedTime);
+
+    this.speed += constants.ACCELERATION_PER_TICK;
+
+    this.updateObjects(elapsedTime);
+    if (this.checkCollisions()) {
+      console.log('game-over');
+    }
+    this.render();
+
     this.lastFrameTime = Date.now();
     const frameTime = this.lastFrameTime - startTime;
-
     const nextRenderDelay = Math.max(1000 / this.maxFPS - frameTime, 0);
-    setTimeout(() => requestAnimationFrame(this.render), nextRenderDelay);
+    setTimeout(() => requestAnimationFrame(this.gameCycle), nextRenderDelay);
+  };
+
+  render = () => {
+    const { renderer } = this;
+    renderer.render(this.scene, this.camera);
   };
 }
 

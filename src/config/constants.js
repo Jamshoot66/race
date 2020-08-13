@@ -14,3 +14,5 @@ export const ZERO_POSITION = { x: 0, y: -8.5 * BLOCK_SIZE, z: 0 };
 export const TOP_POSITION = { x: 0, y: ROAD_HEIGHT, z: 0 };
 
 export const SCORE_FACTOR = 10;
+
+export const ACCELERATION_PER_TICK = 0.1;
