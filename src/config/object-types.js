@@ -1,0 +1,3 @@
+export const TYPE_PLAYER = 'TYPE_PLAYER';
+export const TYPE_ENEMY_CAR = 'TYPE_ENEMY_CAR';
+export const DEFAULT_PLAYER_COLOR = 0xF62C1B;
