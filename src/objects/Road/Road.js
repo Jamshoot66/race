@@ -1,9 +1,10 @@
 import RenderableObject from 'objects/RenderableObject';
 import * as constants from 'config/constants';
+import * as types from 'config/object-types';
 
 export default class Road extends RenderableObject {
   constructor() {
-    super('road');
+    super(types.TYPE_ROAD);
 
     const { THREE } = window;
 
@@ -32,8 +33,10 @@ export default class Road extends RenderableObject {
     this.speed = 0;
   }
 
-  update = (deltaTime = 0) => {
+  update = (deltaTime = 0, payload = { speed: 0 }) => {
     const speedFactor = 2;
+    const { playerSpeed } = payload;
+    this.speed = playerSpeed;
     this.textureYOffset += (this.speed * speedFactor * deltaTime) / 1000;
     this.texture.offset.set(0, this.textureYOffset);
   };
