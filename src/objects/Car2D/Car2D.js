@@ -1,61 +1,45 @@
 import RenderableObject from 'objects/RenderableObject';
 import * as constants from 'config/constants';
+import { generateObject } from 'utils/objects';
 
 export default class Car2D extends RenderableObject {
   constructor({ type = 'Car2D', color = '0xFFFFFF', speed = 0 } = {}) {
     super(type);
 
     this.speed = speed;
-    const wheelTexture = new THREE.TextureLoader().load('textures/brick.png');
-
-    const bodyTexture = new THREE.TextureLoader().load('textures/brick.png');
-    bodyTexture.wrapS = THREE.RepeatWrapping;
-    bodyTexture.wrapT = THREE.RepeatWrapping;
-    bodyTexture.repeat.set(1, 3);
+    const texture = new THREE.TextureLoader().load('textures/brick.png');
 
     const wheelMaterial = new THREE.MeshStandardMaterial({
       color: 0xffffff,
-      map: wheelTexture,
+      map: texture,
     });
+
     const bodyMaterial = new THREE.MeshStandardMaterial({
       color,
-      map: bodyTexture,
+      map: texture,
     });
     const materials = [wheelMaterial, bodyMaterial];
 
-    const wheelSize = [constants.BLOCK_SIZE, constants.BLOCK_SIZE];
-    const wheelFL = new THREE.PlaneGeometry(...wheelSize);
-    wheelFL.translate(-constants.BLOCK_SIZE, constants.BLOCK_SIZE, 0);
-
-    const wheelFR = new THREE.PlaneGeometry(...wheelSize);
-    wheelFR.translate(constants.BLOCK_SIZE, constants.BLOCK_SIZE, 0);
-
-    const wheelBL = new THREE.PlaneGeometry(...wheelSize);
-    wheelBL.translate(-constants.BLOCK_SIZE, -constants.BLOCK_SIZE, 0);
-
-    const wheelBR = new THREE.PlaneGeometry(...wheelSize);
-    wheelBR.translate(constants.BLOCK_SIZE, -constants.BLOCK_SIZE, 0);
-
-    const bodySize = [constants.BLOCK_SIZE, constants.BLOCK_SIZE * 3];
-    const body = new THREE.PlaneGeometry(...bodySize);
-    body.translate(0, constants.BLOCK_SIZE, 0);
-
-    const car = new THREE.Geometry();
-    car.merge(wheelFL);
-    car.merge(wheelFR);
-    car.merge(wheelBL);
-    car.merge(wheelBR);
-    car.merge(body, body.matrix, 1);
-
-    this.mesh = new THREE.Mesh(car, materials);
+    const generatedCar = generateObject(
+      [
+        [0, 2, 0],
+        [1, 2, 1],
+        [0, 2, 0],
+        [1, 0, 1],
+      ],
+      () => new THREE.PlaneGeometry(constants.BLOCK_SIZE, constants.BLOCK_SIZE)
+    );
+    this.mesh = new THREE.Mesh(generatedCar, materials);
   }
 
   moveLeft = () => {
-    this.mesh.translateX(-constants.BLOCK_SIZE);
+    if (this.mesh.position.x > constants.MIN_LEFT_POSITION)
+      this.mesh.translateX(-constants.BLOCK_SIZE);
   };
 
   moveRight = () => {
-    this.mesh.translateX(constants.BLOCK_SIZE);
+    if (this.mesh.position.x < constants.MAX_RIGHT_POSITION)
+      this.mesh.translateX(constants.BLOCK_SIZE);
   };
 
   moveByRelativeSpeed = (deltaTime, playerSpeed) => {
