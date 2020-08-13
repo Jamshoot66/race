@@ -6,3 +6,10 @@
  */
 export const randomInt = (min, max) =>
   Math.floor(Math.random() * (max - min)) + min;
+
+/**
+ * @description get random array item
+ * @param {array} array
+ * @return {*} random array item
+ */
+export const getRandomItem = (array) => array[randomInt(2, array.length)];
