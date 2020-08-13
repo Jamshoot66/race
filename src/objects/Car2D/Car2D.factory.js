@@ -17,7 +17,6 @@ export const createPlayerCar = () =>
   createCar({
     type: types.TYPE_PLAYER,
     color: types.DEFAULT_PLAYER_COLOR,
-    position: { x: 0.0, y: -8.5 * constants.BLOCK_SIZE, z: 0.0 },
   });
 
 export const createEnemyCar = () =>
