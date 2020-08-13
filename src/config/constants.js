@@ -9,3 +9,6 @@ export const SCENE_SECOND_PLANE = 100;
 
 export const MIN_SPEED = 0;
 export const MAX_SPEED = 5;
+
+export const ZERO_POSITION = { x: 0, y: -0.5 * BLOCK_SIZE, z: 0 };
+export const TOP_POSITION = { x: 0, y: ROAD_HEIGHT, z: 0 };
