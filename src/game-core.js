@@ -1,12 +1,16 @@
 import Road from 'objects/Road';
-import Car2D from 'objects/Car2D';
+import { createPlayerCar, createEnemyCar } from 'objects/Car2D';
 import * as actions from 'config/actions';
 import * as constants from 'config/constants';
+import * as types from 'config/object-types';
+import { isCollided } from 'utils/collision';
 
 class GameCore {
   objects = [];
   _speed = constants.MIN_SPEED;
   maxSpeed = constants.MAX_SPEED;
+  score = 0;
+  distance = 0;
 
   set speed(value) {
     this._speed = Math.min(value, this.maxSpeed);
@@ -49,9 +53,10 @@ class GameCore {
     const road = new Road();
     this.addObject(road);
 
-    this.PlayerCar = new Car2D({ type: 'Player', color: 0xf62c1b });
-    this.addObject(this.PlayerCar);
+    this.PlayerCar = createPlayerCar();
 
+    this.addObject(this.PlayerCar);
+    this.addObject(createEnemyCar(this.speed / 2, -4));
 
     this.render();
   }
@@ -78,19 +83,31 @@ class GameCore {
 
   render = () => {
     const startTime = Date.now();
-    this.speed += 0.1;
+    const elapsedTime = startTime - this.lastFrameTime || 0;
+    this.distance += (this.speed * elapsedTime) / 1000;
+    this.score = Math.floor(constants.SCORE_FACTOR * this.distance);
 
+
+    this.speed += 0.1;
     this.objects.forEach((object) => {
       if (object.type === 'road') object.speed = this.speed;
-      object.update(startTime - this.lastFrameTime || 0);
+      if (object.type === types.TYPE_ENEMY_CAR) {
+        object.update(elapsedTime, {
+          playerSpeed: this.speed,
+        });
+
+        console.log(isCollided(this.PlayerCar, object));
+      } else {
+        object.update(elapsedTime);
+      }
     });
 
     const { renderer } = this;
-
     renderer.render(this.scene, this.camera);
     this.lastFrameTime = Date.now();
-    const elapsedTime = this.lastFrameTime - startTime;
-    const nextRenderDelay = Math.max(1000 / this.maxFPS - elapsedTime, 0);
+    const frameTime = this.lastFrameTime - startTime;
+
+    const nextRenderDelay = Math.max(1000 / this.maxFPS - frameTime, 0);
     setTimeout(() => requestAnimationFrame(this.render), nextRenderDelay);
   };
 }
