@@ -35,6 +35,10 @@ class GameCore {
     this.updateCycle();
   }
 
+  onStartNewGame = () => {
+    this.setGameState(types.GAME_STATE_PLAY);
+  };
+
   onCanvasResize = () => this.initCamera();
 
   initCamera = () => {
@@ -64,13 +68,14 @@ class GameCore {
     );
     this.renderer.setClearColor('#4D5041');
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
     directionalLight.position.set(0, 0, 1);
     this.scene.add(directionalLight);
   };
 
   setInitialMenuScene = () => {
     const road = new Road();
+    this.speed = constants.MIN_SPEED;
     road.mesh.translateZ(-0.5);
     this.addObject(road);
     const menuCar = new Car3D();
@@ -123,7 +128,7 @@ class GameCore {
     this.scene.add(renderableObject.mesh);
   };
 
-  processPlayerControl = (event) => {
+  processGamePlayControl = (event) => {
     switch (event) {
       case actions.MOVE_LEFT: {
         this.playerCar.moveLeft();
@@ -133,6 +138,33 @@ class GameCore {
         this.playerCar.moveRight();
         break;
       }
+      default:
+        return;
+    }
+  };
+
+  processMenuControl = (event) => {
+    switch (event) {
+      case actions.START_NEW_GAME: {
+        this.onStartNewGame();
+        break;
+      }
+      default:
+        return;
+    }
+  };
+
+  processControl = (event) => {
+    switch (this.gameState) {
+      case types.GAME_STATE_PLAY:
+        this.processGamePlayControl(event);
+        break;
+
+      case types.GAME_STATE_MENU:
+      case types.GAME_STATE_END:
+        this.processMenuControl(event);
+        break;
+
       default:
         return;
     }
@@ -212,7 +244,7 @@ class GameCore {
     this.lastFrameTime = Date.now();
     const frameTime = this.lastFrameTime - startTime;
     const nextRenderDelay = Math.max(1000 / this.maxFPS - frameTime, 0);
-    setTimeout(() => requestAnimationFrame(this.menuCycle), nextRenderDelay);
+    setTimeout(() => requestAnimationFrame(this.updateCycle), nextRenderDelay);
   };
 
   playCycle = () => {
@@ -226,7 +258,7 @@ class GameCore {
     this.updateObjects(elapsedTime);
     if (this.checkCollisions()) {
       console.log('game-over');
-      this.setGameState(types.GAME_STATE_PLAY);
+      this.setGameState(types.GAME_STATE_MENU);
     }
 
     if (Math.floor(this.distance) % constants.ENEMIES_TO_DISTANCE === 0)
@@ -236,7 +268,7 @@ class GameCore {
     this.lastFrameTime = Date.now();
     const frameTime = this.lastFrameTime - startTime;
     const nextRenderDelay = Math.max(1000 / this.maxFPS - frameTime, 0);
-    setTimeout(() => requestAnimationFrame(this.playCycle), nextRenderDelay);
+    setTimeout(() => requestAnimationFrame(this.updateCycle), nextRenderDelay);
   };
 
   updateCycle = () => {
