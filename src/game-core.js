@@ -157,6 +157,14 @@ class GameCore {
         this.playerCar.moveRight();
         break;
       }
+      case actions.DECELERATE: {
+        this.speed -= this.accelerate();
+        break;
+      }
+      case actions.ACCELERATE: {
+        this.speed += this.accelerate()*5;
+        break;
+      }
       default:
         return;
     }
@@ -266,13 +274,15 @@ class GameCore {
     setTimeout(() => requestAnimationFrame(this.updateCycle), nextRenderDelay);
   };
 
+  accelerate = () => (1 / this.speed ** 3) * constants.ACCELERATION_PER_TICK;
+
   playCycle = () => {
     const startTime = Date.now();
     const elapsedTime = startTime - this.lastFrameTime || 0;
     this.updateScore(elapsedTime);
     this.cleanUselessObjects();
 
-    this.speed += (1 / this.speed ** 3) * constants.ACCELERATION_PER_TICK;
+    this.speed += this.accelerate();
 
     this.updateObjects(elapsedTime);
     if (this.checkCollisions()) {
