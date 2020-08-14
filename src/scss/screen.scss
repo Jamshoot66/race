@@ -29,7 +29,7 @@
 	&__info {
 		@include debug;
 		width: 30%;
-		padding: 10px;
+		padding: 25px 5px;
 		display: flex;
 		flex-direction: column;
 		border-left: 4px solid $borderColor;
