@@ -5,11 +5,14 @@
 	position: relative;
 	width: 100%;
 	max-width: 500px;
-	height: 90vh;
 	padding: 10px;
 	box-sizing: border-box;
 	margin: 0 auto;
 	background-color: $deviceBg;
 
 	@include debug;
+
+	@media screen and (max-width: 576px) {
+		padding: 20px;
+	}
 }
