@@ -48,7 +48,7 @@ export const updateStatusBar = ({
   }
 
   if (savedStatus.gameState !== types.GAME_STATE_PLAY)
-    updateDescription('', 'Press SPACE to start');
+    updateDescription('', 'Press <span class="blink">SPACE</span> to start');
 
   if (savedStatus.gameState === types.GAME_STATE_END) {
     const lastHiScore = localStorage.getItem(constants.HI_SCORE_STORAGE_KEY);
