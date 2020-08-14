@@ -1,0 +1,92 @@
+@import "constants.scss";
+@import "utils.scss";
+
+.controllers-container {
+	@include debug;
+
+	button {
+		background-color: $button;
+		border-radius: 50%;
+		box-sizing: border-box;
+		border: none;
+		position: relative;
+
+		span {
+			color: #ada135;
+			opacity: 1;
+		}
+
+		box-shadow: 4px 5px 7px -3px inset #fdf6bd, 4px 5px 8px -3px;
+
+		&:active {
+			box-shadow: 4px 5px 4px -5px inset #fdf6bd, 4px 5px 8px -5px;
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+}
+
+.arrow-buttons-group {
+	position: relative;
+	height: 200px;
+	margin-top: 20px;
+
+	button {
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		font-size: 25px;
+		size: 32px;
+		font-weight: bold;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		user-select: none;
+	}
+
+	#btn-left {
+		transform: translate(25px, 75px);
+	}
+
+	#btn-right {
+		transform: translate(125px, 75px);
+	}
+
+	#btn-up {
+		transform: translate(75px, 25px);
+	}
+
+	#btn-down {
+		transform: translate(75px, 125px);
+	}
+
+	#btn-space {
+		right: 0;
+		left: auto;
+		transform: translate(-25px, 75px);
+	}
+
+	#btn-audio {
+		right: 0;
+		left: auto;
+		transform: translate(-35px, 25px);
+	}
+}
+
+.btn-mid {
+	width: 50px;
+	height: 50px;
+}
+
+.btn-mini {
+	width: 32px;
+	height: 32px;
+	font-size: 16px !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: content-box;
+}

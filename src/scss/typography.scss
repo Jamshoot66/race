@@ -1,0 +1,16 @@
+html {
+	font-family: 'Share Tech Mono', monospace;
+	font-size: 22px;
+
+	@media screen and (max-width: 576px) {
+		font-size: 20px;
+	}
+
+	@media screen and (max-width: 430px) {
+		font-size: 16px;
+	}
+
+	@media screen and (max-width: 430px) {
+		font-size: 14px;
+	}
+}

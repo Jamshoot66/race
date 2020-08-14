@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+				content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Race</title>
+	<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+	<script src="https://threejs.org/build/three.js" defer></script>
+</head>
+<body>
+	<main class="main-container">
+		<div class="screen-ratio-provider">
+			<div class="screen">
+				<section class="screen__canvas" id="screen-render-container">
+					<canvas id="screen-render-target"></canvas>
+				</section>
+				<section class="screen__info">
+					<div class="info-block" id="hi-score">
+						<header class="info-block__header center">Hi-Score</header>
+						<div class="info-block__value center" ></div>
+					</div>
+
+					<div class="info-block hidden" id="score">
+						<header class="info-block__header center">Last Score</header>
+						<div class="info-block__value center" >200</div>
+					</div>
+
+					<div class="info-block info-block--maximize" id="description">
+						<header class="info-block__header center"></header>
+						<div class="info-block__value center" >Press SPACE to start</div>
+					</div>
+				</section>
+			</div>
+		</div>
+		<div class="controllers-container">
+
+			<div class="arrow-buttons-group">
+				<audio id="player" autoplay loop src="sound/sound.mp3"></audio>
+				<div>
+					<button class="btn-mini audio" id="btn-audio"><span>♬</span></button>
+				</div>
+				<button class="btn-mid" id="btn-left">
+					<span>L</span>
+				</button>
+				<button class="btn-mid" id="btn-right">
+					<span>R</span>
+				</button>
+				<button class="btn-mid" id="btn-up">
+					<span>U</span>
+				</button>
+				<button class="btn-mid" id="btn-down">
+					<span>D</span>
+				</button>
+				<button class="btn-mid" id="btn-space">
+					<span>S</span>
+				</button>
+			</div>
+
+		</div>
+	</main>
+</body>
+</html>

@@ -1,0 +1,8 @@
+#build
+dist
+
+#miscellaneous
+node_modules
+
+#IDE
+.idea

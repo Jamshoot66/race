@@ -1,0 +1,7 @@
+$withDebug: false;
+
+@mixin debug {
+	@if ($withDebug) {
+		outline: 1px dotted red;
+	}
+}
