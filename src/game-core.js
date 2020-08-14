@@ -272,7 +272,7 @@ class GameCore {
     this.updateScore(elapsedTime);
     this.cleanUselessObjects();
 
-    this.speed += constants.ACCELERATION_PER_TICK;
+    this.speed += (1 / this.speed ** 3) * constants.ACCELERATION_PER_TICK;
 
     this.updateObjects(elapsedTime);
     if (this.checkCollisions()) {
