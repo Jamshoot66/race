@@ -27,3 +27,5 @@ export const SCORE_FACTOR = 10;
 
 export const ENEMIES_TO_DISTANCE = 30;
 export const ENEMIES_SPAWN_TIMEOUT = 500;
+
+export const HI_SCORE_STORAGE_KEY = 'HI_SCORE_STORAGE_KEY';
