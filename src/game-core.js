@@ -11,20 +11,40 @@ class GameCore {
   objects = [];
   _speed = constants.MIN_SPEED;
   maxSpeed = constants.MAX_SPEED;
-  score = 0;
+  _score = 0;
   distance = 0;
   lastEnemySpawn = 0;
 
   set speed(value) {
     this._speed = Math.min(value, this.maxSpeed);
+    this.onInfoUpdated({ speed: this._speed });
   }
 
   get speed() {
     return this._speed;
   }
 
+  set score(value) {
+    this._score = value;
+    this.onInfoUpdated({ score: value });
+  }
+
+  get score() {
+    return this._speed;
+  }
+
+  set gameState(value) {
+    this._gameState = value;
+    this.onInfoUpdated({ gameState: value });
+  }
+
+  get gameState() {
+    return this._gameState;
+  }
+
   constructor(props) {
-    const { containerId } = props;
+    const { containerId, onInfoUpdated } = props;
+    this.onInfoUpdated = onInfoUpdated;
     this.maxFPS = constants.MAX_FPS;
     this.renderContainer = document.getElementById(containerId);
     this.renderTarget = document.querySelector(`#${containerId} > canvas`);
@@ -86,7 +106,8 @@ class GameCore {
 
   setInitialPlayScene = () => {
     this.addObject(new Road());
-
+    this.score = 0;
+    this.distance = 0;
     this.playerCar = createPlayerCar();
     this.addObject(this.playerCar);
   };
@@ -106,6 +127,7 @@ class GameCore {
   setGameState = (gameState) => {
     this.gameState = gameState;
     switch (gameState) {
+      case types.GAME_STATE_END:
       case types.GAME_STATE_MENU: {
         this.initMenuScene();
         break;
@@ -114,10 +136,7 @@ class GameCore {
         this.initPlayScene();
         break;
       }
-      case types.GAME_STATE_END: {
-        this.initPlayScene();
-        break;
-      }
+
       default:
         return;
     }
@@ -258,7 +277,7 @@ class GameCore {
     this.updateObjects(elapsedTime);
     if (this.checkCollisions()) {
       console.log('game-over');
-      this.setGameState(types.GAME_STATE_MENU);
+      this.setGameState(types.GAME_STATE_END);
     }
 
     if (Math.floor(this.distance) % constants.ENEMIES_TO_DISTANCE === 0)
@@ -273,13 +292,11 @@ class GameCore {
 
   updateCycle = () => {
     switch (this.gameState) {
+      case types.GAME_STATE_END:
       case types.GAME_STATE_MENU: {
         return this.menuCycle();
       }
       case types.GAME_STATE_PLAY: {
-        return this.playCycle();
-      }
-      case types.GAME_STATE_END: {
         return this.playCycle();
       }
       default:

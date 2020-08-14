@@ -1,11 +1,15 @@
 import './scss/index.scss';
 import Core from './game-core.js';
 import * as actions from 'config/actions';
+import { updateStatusBar, initHighScore } from './status-bar';
 
 window.addEventListener('load', () => {
   const core = new Core({
     containerId: 'screen-render-container',
+    onInfoUpdated: updateStatusBar,
   });
+
+  initHighScore();
 
   window.addEventListener('resize', core.onCanvasResize);
 
