@@ -1,6 +1,11 @@
 import * as actions from './config/actions';
 
 export const initControls = (core) => {
+  document.getElementById('btn-audio').addEventListener('click', () => {
+    const player = document.getElementById('player');
+    player.paused ? player.play() : player.pause();
+  });
+
   document.getElementById('btn-left').addEventListener('click', () => {
     core.processControl(actions.MOVE_LEFT);
   });
