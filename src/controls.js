@@ -1,14 +1,26 @@
-import * as actions from "./config/actions";
+import * as actions from './config/actions';
 
 export const initControls = (core) => {
   document.getElementById('btn-left').addEventListener('click', () => {
     core.processControl(actions.MOVE_LEFT);
   });
-  
+
   document.getElementById('btn-right').addEventListener('click', () => {
     core.processControl(actions.MOVE_RIGHT);
   });
-  
+
+  document.getElementById('btn-up').addEventListener('click', () => {
+    core.processControl(actions.ACCELERATE);
+  });
+
+  document.getElementById('btn-down').addEventListener('click', () => {
+    core.processControl(actions.DECELERATE);
+  });
+
+  document.getElementById('btn-space').addEventListener('click', () => {
+    core.processControl(actions.START_NEW_GAME);
+  });
+
   window.addEventListener('keydown', (e) => {
     switch (e.code) {
       case 'ArrowUp': {
@@ -35,5 +47,4 @@ export const initControls = (core) => {
         return;
     }
   });
-}
-
+};
