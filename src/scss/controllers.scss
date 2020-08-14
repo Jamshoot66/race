@@ -31,12 +31,24 @@
 .arrow-buttons-group {
 	position: relative;
 	height: 200px;
-	padding-top: 50px;
+	margin-top: 20px;
 
 	button {
 		position: absolute;
 		top: 0;
 		left: 0;
+
+		font-size: 25px;
+		size: 32px;
+		font-weight: bold;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		span {
+			color: #ada135;
+			opacity: 0.5;
+		}
 	}
 
 	#btn-left {
@@ -53,5 +65,11 @@
 
 	#btn-down {
 		transform: translate(75px, 125px);
+	}
+
+	#btn-space {
+		right: 0;
+		left: auto;
+		transform: translate(-25px, 75px);
 	}
 }
