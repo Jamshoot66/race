@@ -15,14 +15,24 @@
 	top: 0;
 	left: 0;
 	background-color: $screenBg;
+	border: 4px solid $borderColor;
+	box-sizing: border-box;
 
 	&__canvas {
 		@include debug;
 		width: 70%;
+		min-width: 70%;
+		box-sizing: border-box;
+
 	}
 
 	&__info {
 		@include debug;
 		width: 30%;
+		padding: 10px;
+		display: flex;
+		flex-direction: column;
+		border-left: 4px solid $borderColor;
+		box-sizing: border-box;
 	}
 }
