@@ -8,7 +8,7 @@ export const SCENE_FIRST_PLANE = 0.1;
 export const SCENE_SECOND_PLANE = 100;
 
 export const MIN_SPEED = 3;
-export const MAX_SPEED = 20;
+export const MAX_SPEED = 30;
 export const ACCELERATION_PER_TICK = 0.3;
 export const ROAD_SPEED_FACTOR = 1;
 
@@ -24,6 +24,8 @@ export const TOP_POSITION = { x: -1 * BLOCK_SIZE, y: ROAD_HEIGHT, z: 0 };
 export const DELETE_POSITION = -11 * BLOCK_SIZE;
 
 export const SCORE_FACTOR = 10;
+
+export const STATUS_SPEED_FACTOR = 3;
 
 export const ENEMIES_TO_DISTANCE = 30;
 export const ENEMIES_SPAWN_TIMEOUT = 500;

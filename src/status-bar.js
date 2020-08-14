@@ -10,7 +10,7 @@ export const updateHiScore = (score) => {
 export const initHighScore = () => {
   const hiScore = localStorage.getItem(constants.HI_SCORE_STORAGE_KEY) || 999;
   updateHiScore(hiScore);
-}
+};
 
 export const updateScore = (score) => {
   const scoreBlock = document.getElementById('score');
@@ -41,7 +41,10 @@ export const updateStatusBar = ({
 
   if (gameState !== null) savedStatus.gameState = gameState;
   if (savedStatus.gameState === types.GAME_STATE_PLAY && speed !== null) {
-    updateDescription('Speed', `${speed.toFixed(1)} mph`);
+    updateDescription(
+      'Speed',
+      `${(speed * constants.STATUS_SPEED_FACTOR).toFixed(1)} mph`
+    );
   }
 
   if (savedStatus.gameState !== types.GAME_STATE_PLAY)
