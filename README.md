@@ -1,7 +1,7 @@
 # Brick race game
 *Ron don don ya gare do roron*
 
-Tested and builded with node v12.16.1
+Tested and build with node v12.16.1
 
 ## Preview
 [https://race.sergeygorshkov.com/](https://race.sergeygorshkov.com/)
