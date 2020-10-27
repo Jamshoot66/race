@@ -19,3 +19,11 @@ Open [localhost:3000](http://localhost:3000) to watch it.
 
 ## Technologies
 VanilaJs, SCSS, Webpack, WebGL / ThreeJs
+
+
+## Soundtrack
+Rondondon performed by [Tolubey](https://www.youtube.com/channel/UCwWDJ4ISfUQlfihOFyNYLhQ) 
+
+
+##Post scriptum
+Copying with bad intents prohibited by real patsans law (c)

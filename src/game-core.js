@@ -30,7 +30,7 @@ class GameCore {
   }
 
   get score() {
-    return this._speed;
+    return this._score;
   }
 
   set gameState(value) {
